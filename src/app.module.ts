@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { GraphQLModule } from '@nestjs/graphql';
+
 import { LocationModule } from './location/location.module';
 import { Location } from './location/location.entity';
 import { SectorModule } from './sector/sector.module';
+import { Sector } from './sector/sector.entity';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { SectorModule } from './sector/sector.module';
       url: 'mongodb://localhost/worktracking',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [Location],
+      entities: [Location, Sector],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
