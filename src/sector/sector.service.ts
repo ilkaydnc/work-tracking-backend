@@ -24,4 +24,14 @@ export class SectorService {
 
     return this.sectorRepository.save(sector);
   }
+
+  async getManySectors(sectorIds: string[]): Promise<Sector[]> {
+    return this.sectorRepository.find({
+      where: {
+        id: {
+          $in: sectorIds,
+        },
+      },
+    });
+  }
 }
