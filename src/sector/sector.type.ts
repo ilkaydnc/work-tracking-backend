@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { PartnerType } from 'src/partner/partner.type';
 
 @ObjectType('Sector')
 export class SectorType {
@@ -7,4 +8,7 @@ export class SectorType {
 
   @Field()
   name: string;
+
+  @Field(type => [PartnerType])
+  partners: string[];
 }
