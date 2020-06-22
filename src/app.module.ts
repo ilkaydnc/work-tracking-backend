@@ -6,6 +6,8 @@ import { LocationModule } from './location/location.module';
 import { Location } from './location/location.entity';
 import { SectorModule } from './sector/sector.module';
 import { Sector } from './sector/sector.entity';
+import { PartnerModule } from './partner/partner.module';
+import { Partner } from './partner/partner.entity';
 
 @Module({
   imports: [
@@ -14,13 +16,14 @@ import { Sector } from './sector/sector.entity';
       url: 'mongodb://localhost/worktracking',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [Location, Sector],
+      entities: [Location, Sector, Partner],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
     }),
     LocationModule,
     SectorModule,
+    PartnerModule,
   ],
 })
 export class AppModule {}
