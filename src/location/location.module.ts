@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { LocationResolver } from './location.resolver';
 
-@Module({})
+@Module({
+  providers: [LocationResolver],
+})
 export class LocationModule {}
