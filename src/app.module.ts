@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { LocationModule } from './location/location.module';
 import { Location } from './location/location.entity';
+import { SectorModule } from './sector/sector.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { Location } from './location/location.entity';
       autoSchemaFile: true,
     }),
     LocationModule,
+    SectorModule,
   ],
 })
 export class AppModule {}
