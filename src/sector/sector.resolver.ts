@@ -9,7 +9,7 @@ export class SectorResolver {
   constructor(private sectorService: SectorService) {}
 
   @Query(returns => [SectorType])
-  sector(): Promise<Sector[]> {
+  sectors(): Promise<Sector[]> {
     return this.sectorService.getSectors();
   }
 
@@ -18,5 +18,10 @@ export class SectorResolver {
     @Args('createSectorInput') createSectorInput: CreateSectorInput,
   ): Promise<Sector> {
     return this.sectorService.createSector(createSectorInput);
+  }
+
+  @Mutation(returns => SectorType)
+  deleteSector(@Args('id') id: string): Promise<Sector> {
+    return this.sectorService.deleteSector(id);
   }
 }
