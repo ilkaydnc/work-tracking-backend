@@ -26,7 +26,12 @@ export class SectorService {
   }
 
   async getSectorByID(id: string): Promise<Sector> {
-    return this.sectorRepository.findOne({ id });
+    const sector = await this.sectorRepository.findOne({ id });
+
+    if (!sector)
+      throw new NotFoundException(`Not found sector with this ID: ${id}`);
+
+    return sector;
   }
 
   async createSector(createSectorInput: CreateSectorInput): Promise<Sector> {
@@ -40,8 +45,8 @@ export class SectorService {
   }
 
   async deleteSector(id: string): Promise<Sector> {
-    const sector = await this.sectorRepository.findOne({ id });
-    if (!sector) throw new NotFoundException();
+    const sector = this.getSectorByID(id);
+
     await this.sectorRepository.delete({ id });
 
     return sector;

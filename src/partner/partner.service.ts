@@ -1,15 +1,10 @@
-import {
-  Injectable,
-  NotFoundException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Partner } from './partner.entity';
 import { Repository } from 'typeorm';
 import { CreatePartnerInput } from './create-partner.input';
 import { v4 as uuid } from 'uuid';
 import { UpdatePartnerInput } from './update-partner.input';
-import { ObjectID } from 'mongodb';
 
 @Injectable()
 export class PartnerService {
@@ -23,7 +18,12 @@ export class PartnerService {
   }
 
   async getPartnerByID(id: string): Promise<Partner> {
-    return this.partnerRepository.findOne({ id });
+    const partner = await this.partnerRepository.findOne({ id });
+
+    if (!partner)
+      throw new NotFoundException(`Not found partner with this ID: ${id}`);
+
+    return partner;
   }
 
   async createPartner(
@@ -46,10 +46,7 @@ export class PartnerService {
     updatePartnerInput: UpdatePartnerInput,
   ): Promise<Partner> {
     const { id, name, phone, locationId, sectorIds } = updatePartnerInput;
-    const partner = await this.partnerRepository.findOne({ id });
-
-    if (!partner)
-      throw new NotFoundException(`Not found partner with ${id} ID.`);
+    const partner = await this.getPartnerByID(id);
 
     if (name) partner.name = name;
     if (phone) partner.phone = phone;
@@ -60,8 +57,8 @@ export class PartnerService {
   }
 
   async deletePartner(id: string): Promise<Partner> {
-    const partner = await this.partnerRepository.findOne({ id });
-    if (!partner) throw new NotFoundException();
+    const partner = await this.getPartnerByID(id);
+
     await this.partnerRepository.delete({ id });
 
     return partner;

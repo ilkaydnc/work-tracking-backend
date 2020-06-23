@@ -16,7 +16,12 @@ export class LocationService {
   }
 
   async getLocationByID(id: string): Promise<Location> {
-    return this.locationRepository.findOne({ id });
+    const location = await this.locationRepository.findOne({ id });
+
+    if (!location)
+      throw new NotFoundException(`Not found location with this ID: ${id}`);
+
+    return location;
   }
 
   async createLocation(
@@ -32,8 +37,8 @@ export class LocationService {
   }
 
   async deleteLocation(id: string): Promise<Location> {
-    const location = await this.locationRepository.findOne({ id });
-    if (!location) throw new NotFoundException();
+    const location = this.getLocationByID(id);
+
     await this.locationRepository.delete({ id });
 
     return location;
