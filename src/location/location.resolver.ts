@@ -9,7 +9,7 @@ export class LocationResolver {
   constructor(private locationService: LocationService) {}
 
   @Query(returns => [LocationType])
-  location(): Promise<Location[]> {
+  locations(): Promise<Location[]> {
     return this.locationService.getLocations();
   }
 
@@ -18,5 +18,10 @@ export class LocationResolver {
     @Args('createLocationInput') createLocationInput: CreateLocationInput,
   ): Promise<Location> {
     return this.locationService.createLocation(createLocationInput);
+  }
+
+  @Mutation(returns => LocationType)
+  deleteLocation(@Args('id') id: string): Promise<Location> {
+    return this.locationService.deleteLocation(id);
   }
 }

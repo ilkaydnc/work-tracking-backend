@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Location } from './location.entity';
 import { Repository } from 'typeorm';
@@ -29,5 +29,13 @@ export class LocationService {
     });
 
     return this.locationRepository.save(location);
+  }
+
+  async deleteLocation(id: string): Promise<Location> {
+    const location = await this.locationRepository.findOne({ id });
+    if (!location) throw new NotFoundException();
+    await this.locationRepository.delete({ id });
+
+    return location;
   }
 }
