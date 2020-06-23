@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { SectorType } from 'src/sector/sector.type';
+import { LocationType } from 'src/location/location.type';
 
 @ObjectType('Partner')
 export class PartnerType {
@@ -12,8 +13,8 @@ export class PartnerType {
   @Field()
   phone: string;
 
-  @Field()
-  locationId: string;
+  @Field(type => LocationType)
+  location: string;
 
   @Field(type => [SectorType])
   sectors: string[];
