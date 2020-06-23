@@ -9,11 +9,12 @@ import {
 import { PartnerType } from './partner.type';
 import { PartnerService } from './partner.service';
 import { Partner } from './partner.entity';
-import { CreatePartnerInput } from './partner.input';
+import { CreatePartnerInput } from './create-partner.input';
 import { SectorService } from '../sector/sector.service';
 import { Sector } from 'src/sector/sector.entity';
 import { LocationService } from 'src/location/location.service';
 import { Location } from 'src/location/location.entity';
+import { UpdatePartnerInput } from './update-partner.input';
 
 @Resolver(of => PartnerType)
 export class PartnerResolver {
@@ -24,7 +25,7 @@ export class PartnerResolver {
   ) {}
 
   @Query(returns => [PartnerType])
-  partner(): Promise<Partner[]> {
+  partners(): Promise<Partner[]> {
     return this.partnerService.getPartners();
   }
 
@@ -33,6 +34,18 @@ export class PartnerResolver {
     @Args('createPartnerInput') createPartnerInput: CreatePartnerInput,
   ): Promise<Partner> {
     return this.partnerService.createPartner(createPartnerInput);
+  }
+
+  @Mutation(returns => PartnerType)
+  updatePartner(
+    @Args('updatePartnerInput') updatePartnerInput: UpdatePartnerInput,
+  ): Promise<Partner> {
+    return this.partnerService.updatePartner(updatePartnerInput);
+  }
+
+  @Mutation(returns => PartnerType)
+  deletePartner(@Args('id') id: string): Promise<Partner> {
+    return this.partnerService.deletePartner(id);
   }
 
   @ResolveField()
