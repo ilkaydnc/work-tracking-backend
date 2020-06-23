@@ -15,6 +15,10 @@ export class LocationService {
     return this.locationRepository.find();
   }
 
+  async getLocationByID(id: string): Promise<Location> {
+    return this.locationRepository.findOne({ id });
+  }
+
   async createLocation(
     createLocationInput: CreateLocationInput,
   ): Promise<Location> {
