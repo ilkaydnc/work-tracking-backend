@@ -15,16 +15,6 @@ export class SectorService {
     return this.sectorRepository.find();
   }
 
-  async createSector(createSectorInput: CreateSectorInput): Promise<Sector> {
-    const { name } = createSectorInput;
-    const sector = this.sectorRepository.create({
-      id: uuid(),
-      name,
-    });
-
-    return this.sectorRepository.save(sector);
-  }
-
   async getManySectors(sectorIds: string[]): Promise<Sector[]> {
     return this.sectorRepository.find({
       where: {
@@ -33,5 +23,19 @@ export class SectorService {
         },
       },
     });
+  }
+
+  async getSectorByID(id: string): Promise<Sector> {
+    return this.sectorRepository.findOne({ id });
+  }
+
+  async createSector(createSectorInput: CreateSectorInput): Promise<Sector> {
+    const { name } = createSectorInput;
+    const sector = this.sectorRepository.create({
+      id: uuid(),
+      name,
+    });
+
+    return this.sectorRepository.save(sector);
   }
 }
