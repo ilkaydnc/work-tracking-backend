@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
 import { IsNotEmpty, IsUUID, IsOptional } from 'class-validator';
 
 @InputType()
@@ -24,7 +24,7 @@ export class UpdateWorkInput {
   sectorId: string;
 
   @IsOptional()
-  @Field()
+  @Field(type => Int)
   amount: number;
 
   @IsOptional()
