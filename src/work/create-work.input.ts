@@ -1,5 +1,5 @@
-import { InputType, Field } from '@nestjs/graphql';
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { InputType, Field, Int } from '@nestjs/graphql';
+import { IsNotEmpty, IsUUID, IsDateString } from 'class-validator';
 
 @InputType()
 export class CreateWorkInput {
@@ -19,10 +19,11 @@ export class CreateWorkInput {
   sectorId: string;
 
   @IsNotEmpty()
-  @Field()
+  @Field(type => Int)
   amount: number;
 
   @IsNotEmpty()
+  @IsDateString()
   @Field()
   date: string;
 }
