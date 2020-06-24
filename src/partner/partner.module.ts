@@ -9,5 +9,6 @@ import { LocationModule } from 'src/location/location.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Partner]), SectorModule, LocationModule],
   providers: [PartnerResolver, PartnerService],
+  exports: [PartnerService],
 })
 export class PartnerModule {}
