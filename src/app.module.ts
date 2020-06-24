@@ -10,6 +10,7 @@ import { PartnerModule } from './partner/partner.module';
 import { Partner } from './partner/partner.entity';
 import { AdModule } from './ad/ad.module';
 import { Ad } from './ad/ad.entity';
+import { WorkModule } from './work/work.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { Ad } from './ad/ad.entity';
     SectorModule,
     PartnerModule,
     AdModule,
+    WorkModule,
   ],
 })
 export class AppModule {}
