@@ -67,4 +67,12 @@ export class WorkService {
 
     return this.workRepository.save(work)
   }
+
+  async deleteWork(id: string): Promise<Work> {
+    const work = await this.getWorkByID(id)
+
+    await this.workRepository.deleteOne({ id })
+
+    return work
+  }
 }

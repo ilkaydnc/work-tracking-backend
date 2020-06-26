@@ -37,10 +37,11 @@ export class WorkResolver {
   async createWork(@Args('createWorkInput') createWorkInput: CreateWorkInput): Promise<Work> {
     const { partnerId, sectorId } = createWorkInput
     const partner = await this.partnerService.getPartnerByID(partnerId)
-    const sector = await this.sectorService.getSectorByID(sectorId)
 
-    if (sector && !partner.sectorIds.includes(sectorId))
-      throw new BadRequestException(`${partner.name} haven't this sector with ID: ${sectorId}`)
+    await this.sectorService.getSectorByID(sectorId)
+
+    if (!partner.sectorIds.includes(sectorId))
+      throw new BadRequestException(`${partner.name} has no sector with ID: ${sectorId}`)
 
     return this.workService.createWork({
       ...createWorkInput,
@@ -65,13 +66,18 @@ export class WorkResolver {
 
     if (!sectorId && !partner.sectorIds.includes(currentSectorId))
       throw new BadRequestException(
-        `${partner.name} haven't current sector in this work. Please update with sectorID.`
+        `${partner.name} hasn't current sector in this work. Please update with sectorID.`
       )
 
     return this.workService.updateWork({
       ...updateWorkInput,
       locationId: partner.locationId,
     })
+  }
+
+  @Mutation(returns => WorkType)
+  async deleteWork(@Args('id') id: string): Promise<Work> {
+    return this.workService.deleteWork(id)
   }
 
   @ResolveField()
