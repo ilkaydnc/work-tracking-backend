@@ -1,28 +1,28 @@
-import { InputType, Field, ID } from '@nestjs/graphql';
-import { IsUUID, IsOptional, IsNotEmpty } from 'class-validator';
+import { InputType, Field, ID } from '@nestjs/graphql'
+import { IsUUID, IsOptional, IsNotEmpty } from 'class-validator'
 
 @InputType()
 export class UpdatePartnerInput {
   @IsUUID()
   @IsNotEmpty()
   @Field()
-  id: string;
+  id: string
 
   @IsOptional()
   @Field({ nullable: true })
-  name: string;
+  name: string
 
   @IsOptional()
   @Field({ nullable: true })
-  phone: string;
+  phone: string
 
   @IsUUID()
   @IsOptional()
   @Field({ nullable: true })
-  locationId: string;
+  locationId: string
 
   @IsOptional()
   @IsUUID('4', { each: true })
   @Field(() => [ID], { nullable: true })
-  sectorIds: string[];
+  sectorIds: string[]
 }

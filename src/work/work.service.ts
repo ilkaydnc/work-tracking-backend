@@ -1,55 +1,46 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Work } from './work.entity';
-import { Repository, Between } from 'typeorm';
-import { FilterWorksInput } from './filter-works.input';
-import { CreateWorkInput } from './create-work.input';
-import { v4 as uuid } from 'uuid';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Work } from './work.entity'
+import { getMongoRepository } from 'typeorm'
+import { FilterWorksInput } from './filter-works.input'
+import { CreateWorkInput } from './create-work.input'
+import { v4 as uuid } from 'uuid'
+import { UpdateWorkInput } from './update-work.input'
 
 @Injectable()
 export class WorkService {
   constructor(
     @InjectRepository(Work)
-    private workRepository: Repository<Work>,
+    private workRepository = getMongoRepository(Work)
   ) {}
 
-  async getWorks(filterWorksInput: FilterWorksInput): Promise<Work[]> {
-    const {
-      partnerId,
-      locationId,
-      sectorId,
-      startDate,
-      endDate,
-    } = filterWorksInput;
+  async getWorks(): Promise<Work[]> {
+    return this.workRepository.find({})
+  }
+
+  async getWorksWithFilter(filterWorksInput: FilterWorksInput): Promise<Work[]> {
+    const { partnerId, locationId, sectorId, startDate, endDate } = filterWorksInput
+
     return this.workRepository.find({
       where: {
-        $and: [
-          {
-            partnerId: partnerId,
-          },
-          {
-            locationId: locationId,
-          },
-          {
-            sectorId: sectorId,
-          },
-        ],
-        date: Between(new Date(startDate), new Date(endDate)),
+        [partnerId && 'partnerId']: { $eq: partnerId },
+        [locationId && 'locationId']: { $eq: locationId },
+        [sectorId && 'sectorId']: { $eq: sectorId },
+        created_at: { $gte: new Date(startDate), $lt: new Date(endDate) },
       },
-    });
+    })
   }
 
   async getWorkByID(id: string): Promise<Work> {
-    const work = await this.workRepository.findOne({ id });
+    const work = await this.workRepository.findOne({ id })
 
-    if (!work)
-      throw new NotFoundException(`Not found work with this ID: ${id}`);
+    if (!work) throw new NotFoundException(`Not found work with this ID: ${id}`)
 
-    return work;
+    return work
   }
 
   async createWork(createWorkInput: CreateWorkInput): Promise<Work> {
-    const { partnerId, locationId, sectorId, amount, date } = createWorkInput;
+    const { partnerId, locationId, sectorId, amount, date } = createWorkInput
 
     const work = this.workRepository.create({
       id: uuid(),
@@ -58,8 +49,22 @@ export class WorkService {
       sectorId,
       amount,
       date,
-    });
+    })
 
-    return this.workRepository.save(work);
+    return this.workRepository.save(work)
+  }
+
+  async updateWork(updateWorkInput: UpdateWorkInput): Promise<Work> {
+    const { id, partnerId, locationId, sectorId, amount, date } = updateWorkInput
+
+    const work = await this.getWorkByID(id)
+
+    if (partnerId) work.partnerId = partnerId
+    if (locationId) work.locationId = locationId
+    if (sectorId) work.sectorId = sectorId
+    if (amount) work.amount = amount
+    if (date) work.date = new Date(date)
+
+    return this.workRepository.save(work)
   }
 }

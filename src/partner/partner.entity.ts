@@ -1,22 +1,22 @@
-import { Entity, ObjectIdColumn, PrimaryColumn, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, PrimaryColumn, Column } from 'typeorm'
 
 @Entity()
 export class Partner {
   @ObjectIdColumn()
-  _id: string;
+  _id: string
 
   @PrimaryColumn()
-  id: string;
+  id: string
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  phone: string;
+  phone: string
 
   @Column()
-  locationId: string;
+  locationId: string
 
   @Column()
-  sectorIds: string[];
+  sectorIds: string[]
 }

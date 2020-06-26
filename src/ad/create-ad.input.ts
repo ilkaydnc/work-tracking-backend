@@ -1,23 +1,23 @@
-import { InputType, Field } from '@nestjs/graphql';
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { InputType, Field } from '@nestjs/graphql'
+import { IsNotEmpty, IsUUID } from 'class-validator'
 
 @InputType()
 export class CreateAdInput {
   @IsNotEmpty()
   @IsUUID()
   @Field()
-  locationId: string;
+  locationId: string
 
   @IsNotEmpty()
   @IsUUID()
   @Field()
-  sectorId: string;
+  sectorId: string
 
   @IsNotEmpty()
   @Field()
-  amount: number;
+  amount: number
 
   @IsNotEmpty({ message: 'Date eksik' })
   @Field()
-  date: string;
+  date: string
 }

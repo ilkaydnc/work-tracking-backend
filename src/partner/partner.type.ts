@@ -1,21 +1,21 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { SectorType } from 'src/sector/sector.type';
-import { LocationType } from 'src/location/location.type';
+import { ObjectType, Field, ID } from '@nestjs/graphql'
+import { SectorType } from 'src/sector/sector.type'
+import { LocationType } from 'src/location/location.type'
 
 @ObjectType('Partner')
 export class PartnerType {
   @Field(type => ID)
-  id: string;
+  id: string
 
   @Field()
-  name: string;
+  name: string
 
   @Field()
-  phone: string;
+  phone: string
 
   @Field(type => LocationType)
-  location: string;
+  location: string
 
   @Field(type => [SectorType])
-  sectors: string[];
+  sectors: string[]
 }

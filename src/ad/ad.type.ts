@@ -1,21 +1,21 @@
-import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
-import { LocationType } from 'src/location/location.type';
-import { SectorType } from 'src/sector/sector.type';
+import { ObjectType, Field, ID, Int } from '@nestjs/graphql'
+import { LocationType } from 'src/location/location.type'
+import { SectorType } from 'src/sector/sector.type'
 
-@ObjectType()
+@ObjectType('Ad')
 export class AdType {
   @Field(type => ID)
-  id: string;
+  id: string
 
   @Field(type => LocationType)
-  location: string;
+  location: string
 
   @Field(type => SectorType)
-  sector: string;
+  sector: string
 
   @Field(type => Int)
-  amount: number;
+  amount: number
 
   @Field()
-  date: string;
+  date: string
 }

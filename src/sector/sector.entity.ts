@@ -1,13 +1,13 @@
-import { Entity, PrimaryColumn, Column, ObjectIdColumn } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ObjectIdColumn } from 'typeorm'
 
 @Entity()
 export class Sector {
   @ObjectIdColumn()
-  _id: string;
+  _id: string
 
   @PrimaryColumn()
-  id: string;
+  id: string
 
   @Column()
-  name: string;
+  name: string
 }

@@ -1,22 +1,22 @@
-import { Entity, ObjectIdColumn, PrimaryColumn, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, PrimaryColumn, Column } from 'typeorm'
 
 @Entity()
 export class Ad {
   @ObjectIdColumn()
-  _id: string;
+  _id: string
 
   @PrimaryColumn()
-  id: string;
+  id: string
 
   @Column()
-  locationId: string;
+  locationId: string
 
   @Column()
-  sectorId: string;
+  sectorId: string
 
   @Column()
-  amount: number;
+  amount: number
 
   @Column()
-  date: string;
+  date: string
 }
