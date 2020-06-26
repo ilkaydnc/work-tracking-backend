@@ -1,29 +1,29 @@
-import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsNotEmpty, IsUUID, IsDateString } from 'class-validator';
+import { InputType, Field, Int } from '@nestjs/graphql'
+import { IsNotEmpty, IsUUID, IsDate, IsOptional } from 'class-validator'
 
 @InputType()
 export class CreateWorkInput {
   @IsNotEmpty()
   @IsUUID()
   @Field()
-  partnerId: string;
+  partnerId: string
 
   @IsNotEmpty()
   @IsUUID()
   @Field()
-  locationId: string;
+  locationId: string
 
   @IsNotEmpty()
   @IsUUID()
   @Field()
-  sectorId: string;
+  sectorId: string
 
   @IsNotEmpty()
   @Field(type => Int)
-  amount: number;
+  amount: number
 
-  @IsNotEmpty()
-  @IsDateString()
-  @Field()
-  date: string;
+  @IsOptional()
+  @IsDate()
+  @Field({ nullable: true })
+  date: string
 }
