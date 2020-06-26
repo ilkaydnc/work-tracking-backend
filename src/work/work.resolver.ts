@@ -48,7 +48,7 @@ export class WorkResolver {
 
   @ResolveField()
   async location(@Parent() work: Work): Promise<Location> {
-    return this.locationService.getLocationByID(work.locationId);
+    const partner = await this.partnerService.getPartnerByID(work.partnerId)
   }
 
   @ResolveField()
