@@ -1,5 +1,5 @@
-import { InputType, Field } from '@nestjs/graphql'
-import { IsNotEmpty, IsUUID } from 'class-validator'
+import { InputType, Field, Int } from '@nestjs/graphql'
+import { IsNotEmpty, IsUUID, IsDate } from 'class-validator'
 
 @InputType()
 export class CreateAdInput {
@@ -14,10 +14,11 @@ export class CreateAdInput {
   sectorId: string
 
   @IsNotEmpty()
-  @Field()
+  @Field(type => Int)
   amount: number
 
-  @IsNotEmpty({ message: 'Date eksik' })
+  @IsNotEmpty()
+  @IsDate()
   @Field()
-  date: string
+  date: Date
 }

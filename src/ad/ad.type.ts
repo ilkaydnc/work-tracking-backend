@@ -17,5 +17,11 @@ export class AdType {
   amount: number
 
   @Field()
-  date: string
+  date: Date
+
+  @Field()
+  created_at: Date
+
+  @Field()
+  updated_at: Date
 }

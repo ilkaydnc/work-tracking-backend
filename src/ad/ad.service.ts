@@ -5,6 +5,7 @@ import { Repository } from 'typeorm'
 import { CreateAdInput } from './create-ad.input'
 import { v4 as uuid } from 'uuid'
 import { UpdateAdInput } from './update-ad.input'
+import { FilterAdsInput } from './filter-ads.input'
 
 @Injectable()
 export class AdService {
@@ -25,6 +26,19 @@ export class AdService {
     return ad
   }
 
+  async getAdsWithFilter(filterAdsInput: FilterAdsInput): Promise<Ad[]> {
+    const { partnerId, locationId, sectorId, startDate, endDate } = filterAdsInput
+
+    return this.adRepository.find({
+      where: {
+        [partnerId && 'partnerId']: { $eq: partnerId },
+        [locationId && 'locationId']: { $eq: locationId },
+        [sectorId && 'sectorId']: { $eq: sectorId },
+        date: { $gte: new Date(startDate), $lt: new Date(endDate) },
+      },
+    })
+  }
+
   async createAd(createAdInput: CreateAdInput): Promise<Ad> {
     const { locationId, sectorId, amount, date } = createAdInput
 
@@ -33,7 +47,7 @@ export class AdService {
       locationId,
       sectorId,
       amount,
-      date,
+      date: new Date(date),
     })
 
     return this.adRepository.save(ad)
@@ -46,7 +60,7 @@ export class AdService {
     if (locationId) ad.locationId = locationId
     if (sectorId) ad.sectorId = sectorId
     if (amount) ad.amount = amount
-    if (date) ad.date = date
+    if (date) ad.date = new Date(date)
 
     return this.adRepository.save(ad)
   }

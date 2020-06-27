@@ -1,4 +1,11 @@
-import { Entity, PrimaryColumn, Column, ObjectIdColumn } from 'typeorm'
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  ObjectIdColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 
 @Entity()
 export class Location {
@@ -10,4 +17,10 @@ export class Location {
 
   @Column()
   name: string
+
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date
 }

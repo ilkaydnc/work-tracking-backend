@@ -24,7 +24,7 @@ export class WorkResolver {
 
   @Query(returns => [WorkType])
   async works(@Args('filterWorksInput') filterWorksInput?: FilterWorksInput): Promise<Work[]> {
-    const { partnerId, locationId, sectorId, startDate, endDate } = filterWorksInput
+    const { partnerId, locationId, sectorId } = filterWorksInput
 
     if (partnerId) await this.partnerService.getPartnerByID(partnerId)
     if (locationId) await this.locationService.getLocationByID(locationId)
@@ -66,7 +66,7 @@ export class WorkResolver {
 
     if (!sectorId && !partner.sectorIds.includes(currentSectorId))
       throw new BadRequestException(
-        `${partner.name} hasn't current sector in this work. Please update with sectorID.`
+        `${partner.name} haven't the sector in this work. Please update with "sectorId".`
       )
 
     return this.workService.updateWork({

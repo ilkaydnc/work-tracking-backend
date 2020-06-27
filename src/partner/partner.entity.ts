@@ -1,4 +1,11 @@
-import { Entity, ObjectIdColumn, PrimaryColumn, Column } from 'typeorm'
+import {
+  Entity,
+  ObjectIdColumn,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 
 @Entity()
 export class Partner {
@@ -19,4 +26,10 @@ export class Partner {
 
   @Column()
   sectorIds: string[]
+
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date
 }

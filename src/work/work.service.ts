@@ -26,7 +26,7 @@ export class WorkService {
         [partnerId && 'partnerId']: { $eq: partnerId },
         [locationId && 'locationId']: { $eq: locationId },
         [sectorId && 'sectorId']: { $eq: sectorId },
-        created_at: { $gte: new Date(startDate), $lt: new Date(endDate) },
+        date: { $gte: new Date(startDate), $lt: new Date(endDate) },
       },
     })
   }
@@ -48,7 +48,7 @@ export class WorkService {
       locationId,
       sectorId,
       amount,
-      date,
+      date: new Date(date),
     })
 
     return this.workRepository.save(work)

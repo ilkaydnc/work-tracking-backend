@@ -18,4 +18,10 @@ export class PartnerType {
 
   @Field(type => [SectorType])
   sectors: string[]
+
+  @Field()
+  created_at: Date
+
+  @Field()
+  updated_at: Date
 }

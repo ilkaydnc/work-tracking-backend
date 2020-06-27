@@ -1,4 +1,11 @@
-import { Entity, ObjectIdColumn, PrimaryColumn, Column } from 'typeorm'
+import {
+  Entity,
+  ObjectIdColumn,
+  PrimaryColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 
 @Entity()
 export class Ad {
@@ -18,5 +25,11 @@ export class Ad {
   amount: number
 
   @Column()
-  date: string
+  date: Date
+
+  @CreateDateColumn({ name: 'created_at' })
+  created_at: Date
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updated_at: Date
 }
