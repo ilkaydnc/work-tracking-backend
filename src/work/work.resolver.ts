@@ -10,10 +10,12 @@ import { CreateWorkInput } from './create-work.input'
 import { Partner } from 'src/partner/partner.entity'
 import { Location } from 'src/location/location.entity'
 import { Sector } from 'src/sector/sector.entity'
-import { BadRequestException } from '@nestjs/common'
+import { BadRequestException, UseGuards } from '@nestjs/common'
 import { UpdateWorkInput } from './update-work.input'
+import { GqlAuthGuard } from 'src/auth/gql-auth.guard'
 
 @Resolver(of => WorkType)
+@UseGuards(GqlAuthGuard)
 export class WorkResolver {
   constructor(
     private workService: WorkService,

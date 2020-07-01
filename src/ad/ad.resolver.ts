@@ -8,8 +8,11 @@ import { CreateAdInput } from './create-ad.input'
 import { UpdateAdInput } from './update-ad.input'
 import { Sector } from 'src/sector/sector.entity'
 import { Location } from 'src/location/location.entity'
+import { UseGuards } from '@nestjs/common'
+import { GqlAuthGuard } from 'src/auth/gql-auth.guard'
 
 @Resolver(of => AdType)
+@UseGuards(GqlAuthGuard)
 export class AdResolver {
   constructor(
     private adService: AdService,

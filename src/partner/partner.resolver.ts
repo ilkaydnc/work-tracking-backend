@@ -8,8 +8,11 @@ import { Sector } from 'src/sector/sector.entity'
 import { LocationService } from 'src/location/location.service'
 import { Location } from 'src/location/location.entity'
 import { UpdatePartnerInput } from './update-partner.input'
+import { UseGuards } from '@nestjs/common'
+import { GqlAuthGuard } from 'src/auth/gql-auth.guard'
 
 @Resolver(of => PartnerType)
+@UseGuards(GqlAuthGuard)
 export class PartnerResolver {
   constructor(
     private partnerService: PartnerService,

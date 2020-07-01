@@ -6,9 +6,16 @@ import { Work } from './work.entity'
 import { PartnerModule } from 'src/partner/partner.module'
 import { LocationModule } from 'src/location/location.module'
 import { SectorModule } from 'src/sector/sector.module'
+import { AuthModule } from 'src/auth/auth.module'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Work]), PartnerModule, LocationModule, SectorModule],
+  imports: [
+    TypeOrmModule.forFeature([Work]),
+    PartnerModule,
+    LocationModule,
+    SectorModule,
+    AuthModule,
+  ],
   providers: [WorkService, WorkResolver],
 })
 export class WorkModule {}
