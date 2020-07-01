@@ -3,8 +3,11 @@ import { LocationType } from './location.type'
 import { LocationService } from './location.service'
 import { Location } from './location.entity'
 import { CreateLocationInput } from './location.input'
+import { UseGuards } from '@nestjs/common'
+import { GqlAuthGuard } from 'src/auth/gql-auth.guard'
 
 @Resolver(of => LocationType)
+@UseGuards(GqlAuthGuard)
 export class LocationResolver {
   constructor(private locationService: LocationService) {}
 
