@@ -17,6 +17,9 @@ import { Ad } from './ad/ad.entity'
 import { WorkModule } from './work/work.module'
 import { Work } from './work/work.entity'
 
+import { AuthModule } from './auth/auth.module'
+import { User } from './auth/user.entity'
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -24,16 +27,18 @@ import { Work } from './work/work.entity'
       url: 'mongodb://localhost/worktracking',
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [Location, Sector, Partner, Ad, Work],
+      entities: [Location, Sector, Partner, Ad, Work, User],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
+      context: ({ req }) => ({ req }),
     }),
     LocationModule,
     SectorModule,
     PartnerModule,
     AdModule,
     WorkModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
