@@ -20,6 +20,8 @@ import { Work } from './work/work.entity'
 import { AuthModule } from './auth/auth.module'
 import { User } from './auth/user.entity'
 
+import { StatisticModule } from './statistic/statistic.module'
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -39,6 +41,7 @@ import { User } from './auth/user.entity'
     AdModule,
     WorkModule,
     AuthModule,
+    StatisticModule,
   ],
 })
 export class AppModule {}
