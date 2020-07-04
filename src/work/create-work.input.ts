@@ -25,5 +25,5 @@ export class CreateWorkInput {
   @IsNotEmpty()
   @IsDate()
   @Field({ nullable: true })
-  date: string
+  date: Date
 }

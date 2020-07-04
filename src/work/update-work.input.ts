@@ -30,5 +30,5 @@ export class UpdateWorkInput {
   @IsOptional()
   @IsDate()
   @Field({ nullable: true })
-  date: string
+  date: Date
 }
