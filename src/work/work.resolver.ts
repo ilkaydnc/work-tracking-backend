@@ -84,12 +84,14 @@ export class WorkResolver {
 
   @ResolveField()
   async partner(@Parent() work: Work): Promise<Partner> {
-    return this.partnerService.getPartnerByID(work.partnerId)
+    const partner = await this.partnerService.getPartnerByID(work.partnerId)
+    return partner
   }
 
   @ResolveField()
   async location(@Parent() work: Work): Promise<Location> {
     const partner = await this.partnerService.getPartnerByID(work.partnerId)
+
     return this.locationService.getLocationByID(partner.locationId)
   }
 

@@ -1,18 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Location } from './location.entity'
-import { Repository } from 'typeorm'
+import { getMongoRepository } from 'typeorm'
 import { v4 as uuid } from 'uuid'
 import { CreateLocationInput } from './location.input'
 @Injectable()
 export class LocationService {
   constructor(
     @InjectRepository(Location)
-    private locationRepository: Repository<Location>
+    private locationRepository = getMongoRepository(Location)
   ) {}
 
   async getLocations(): Promise<Location[]> {
-    return this.locationRepository.find()
+    return this.locationRepository.find({
+      where: {
+        is_deleted: { $ne: true },
+      },
+    })
   }
 
   async getLocationByID(id: string): Promise<Location> {
@@ -34,10 +38,10 @@ export class LocationService {
   }
 
   async deleteLocation(id: string): Promise<Location> {
-    const location = this.getLocationByID(id)
+    const location = await this.getLocationByID(id)
 
-    await this.locationRepository.delete({ id })
+    location.is_deleted = true
 
-    return location
+    return this.locationRepository.save(location)
   }
 }

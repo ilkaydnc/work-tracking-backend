@@ -15,7 +15,11 @@ export class AdService {
   ) {}
 
   async getAds(): Promise<Ad[]> {
-    return this.adRepository.find()
+    return this.adRepository.find({
+      where: {
+        is_deleted: { $ne: true },
+      },
+    })
   }
 
   async getAdByID(id: string): Promise<Ad> {
@@ -35,6 +39,7 @@ export class AdService {
         [locationId && 'locationId']: { $eq: locationId },
         [sectorId && 'sectorId']: { $eq: sectorId },
         date: { $gte: new Date(startDate), $lt: new Date(endDate) },
+        is_deleted: { $ne: true },
       },
     })
   }
@@ -68,8 +73,8 @@ export class AdService {
   async deleteAd(id: string): Promise<Ad> {
     const ad = await this.getAdByID(id)
 
-    await this.adRepository.delete({ id })
+    ad.is_deleted = true
 
-    return ad
+    return this.adRepository.save(ad)
   }
 }

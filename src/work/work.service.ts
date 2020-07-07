@@ -27,6 +27,10 @@ export class WorkService {
         [locationId && 'locationId']: { $eq: locationId },
         [sectorId && 'sectorId']: { $eq: sectorId },
         date: { $gte: new Date(startDate), $lt: new Date(endDate) },
+        is_deleted: { $ne: true },
+      },
+      order: {
+        updated_at: 'DESC',
       },
     })
   }
@@ -71,8 +75,8 @@ export class WorkService {
   async deleteWork(id: string): Promise<Work> {
     const work = await this.getWorkByID(id)
 
-    await this.workRepository.deleteOne({ id })
+    work.is_deleted = true
 
-    return work
+    return this.workRepository.save(work)
   }
 }

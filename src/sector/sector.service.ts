@@ -1,18 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Sector } from './sector.entity'
-import { Repository } from 'typeorm'
+import { getMongoRepository } from 'typeorm'
 import { v4 as uuid } from 'uuid'
 import { CreateSectorInput } from './sector.input'
 @Injectable()
 export class SectorService {
   constructor(
     @InjectRepository(Sector)
-    private sectorRepository: Repository<Sector>
+    private sectorRepository = getMongoRepository(Sector)
   ) {}
 
   async getSectors(): Promise<Sector[]> {
-    return this.sectorRepository.find()
+    return this.sectorRepository.find({
+      where: {
+        is_deleted: { $ne: true },
+      },
+    })
   }
 
   async getManySectors(sectorIds: string[]): Promise<Sector[]> {
@@ -21,6 +25,7 @@ export class SectorService {
         id: {
           $in: sectorIds,
         },
+        is_deleted: { $ne: true },
       },
     })
   }
@@ -43,10 +48,10 @@ export class SectorService {
   }
 
   async deleteSector(id: string): Promise<Sector> {
-    const sector = this.getSectorByID(id)
+    const sector = await this.getSectorByID(id)
 
-    await this.sectorRepository.delete({ id })
+    sector.is_deleted = true
 
-    return sector
+    return this.sectorRepository.save(sector)
   }
 }

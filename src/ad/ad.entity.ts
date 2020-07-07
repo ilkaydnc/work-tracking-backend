@@ -27,6 +27,9 @@ export class Ad {
   @Column()
   date: Date
 
+  @Column({ default: false })
+  is_deleted: boolean
+
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date
 

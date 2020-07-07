@@ -14,7 +14,11 @@ export class PartnerService {
   ) {}
 
   async getPartners(): Promise<Partner[]> {
-    return this.partnerRepository.find()
+    return this.partnerRepository.find({
+      where: {
+        is_deleted: { $ne: true },
+      },
+    })
   }
 
   async getPartnerByID(id: string): Promise<Partner> {
@@ -54,8 +58,8 @@ export class PartnerService {
   async deletePartner(id: string): Promise<Partner> {
     const partner = await this.getPartnerByID(id)
 
-    await this.partnerRepository.delete({ id })
+    partner.is_deleted = true
 
-    return partner
+    return this.partnerRepository.save(partner)
   }
 }

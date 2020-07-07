@@ -18,6 +18,9 @@ export class Location {
   @Column()
   name: string
 
+  @Column({ default: false })
+  is_deleted: boolean
+
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date
 
