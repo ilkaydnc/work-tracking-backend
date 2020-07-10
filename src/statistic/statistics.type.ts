@@ -1,7 +1,7 @@
 import { ObjectType, Field, Float } from '@nestjs/graphql'
 
 @ObjectType('Statistics')
-export class TotalStatisticType {
+export class StatisticType {
   @Field(type => Float)
   works_total: number
 
