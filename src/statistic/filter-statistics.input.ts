@@ -6,6 +6,11 @@ export class FilterStatisticInput {
   @IsOptional()
   @IsUUID()
   @Field({ nullable: true })
+  partnerId: string
+
+  @IsOptional()
+  @IsUUID()
+  @Field({ nullable: true })
   locationId: string
 
   @IsOptional()
