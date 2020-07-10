@@ -26,7 +26,10 @@ export class WorkService {
         [partnerId && 'partnerId']: { $eq: partnerId },
         [locationId && 'locationId']: { $eq: locationId },
         [sectorId && 'sectorId']: { $eq: sectorId },
-        date: { $gte: new Date(startDate), $lt: new Date(endDate) },
+        date: {
+          $gte: new Date(startDate),
+          $lt: new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), 23, 59, 59),
+        },
         is_deleted: { $ne: true },
       },
       order: {
