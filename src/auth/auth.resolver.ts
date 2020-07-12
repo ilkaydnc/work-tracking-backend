@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql'
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { UserType } from './user.type'
 import { AuthService } from './auth.service'
 import { SignUpInput } from './sign-up.input'
