@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { GraphQLModule } from '@nestjs/graphql'
+import { ConfigModule } from '@nestjs/config'
 
 import { LocationModule } from './location/location.module'
 import { Location } from './location/location.entity'
@@ -24,9 +25,12 @@ import { StatisticModule } from './statistic/statistic.module'
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
-      url: 'mongodb://localhost/worktracking',
+      url: process.env.MONGODB_URL,
       synchronize: true,
       useUnifiedTopology: true,
       entities: [Location, Sector, Partner, Ad, Work, User],
